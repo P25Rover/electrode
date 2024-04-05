@@ -1,0 +1,191 @@
+{
+  "configById": {
+    "congipilot-joystick.CogniPilot Joystick!3i8jpy6": {
+      "topic": "/cerebri/in/joy"
+    },
+    "3D!18i6zy7": {
+      "layers": {
+        "845139cb-26bc-40b3-8161-8ab60af4baf5": {
+          "visible": true,
+          "frameLocked": true,
+          "label": "Grid",
+          "instanceId": "845139cb-26bc-40b3-8161-8ab60af4baf5",
+          "layerId": "foxglove.Grid",
+          "size": 10,
+          "divisions": 10,
+          "lineWidth": 1,
+          "color": "#248eff",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "order": 1
+        }
+      },
+      "scene": {
+        "transforms": {
+          "showLabel": true,
+          "axisScale": 1,
+          "lineWidth": 5,
+          "enablePreloading": false,
+          "editable": false,
+          "labelSize": 0.12
+        }
+      },
+      "topics": {
+        "/lidar/scan": {
+          "visible": true,
+          "colorField": "intensity",
+          "colorMode": "colormap",
+          "colorMap": "turbo"
+        }
+      }
+    },
+    "Image!dzx5t6": {
+      "cameraState": {
+        "distance": 20,
+        "perspective": true,
+        "phi": 60,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "thetaOffset": 45,
+        "fovy": 45,
+        "near": 0.5,
+        "far": 5000
+      },
+      "imageMode": {
+        "imageTopic": "/camera/image_raw/compressed"
+      },
+      "foxglovePanelTitle": "Camera"
+    },
+    "RawMessages!1ydg0gi": {
+      "diffEnabled": false,
+      "diffMethod": "custom",
+      "diffTopicPath": "",
+      "showFullMessageForDiff": false,
+      "topicPath": "/cerebri/out/status.status_message",
+      "fontSize": 18
+    },
+    "Indicator!dweyid": {
+      "path": "/cerebri/out/status.arming",
+      "style": "background",
+      "rules": [
+        {
+          "operator": "=",
+          "rawValue": "1",
+          "color": "#00ff00",
+          "label": "DISARMED"
+        },
+        {
+          "operator": "=",
+          "rawValue": "2",
+          "color": "#ff0000",
+          "label": "ARMED"
+        },
+        {
+          "operator": "=",
+          "rawValue": "3",
+          "color": "#ffff00",
+          "label": "DISARMED BATTERY CRITICAL!!!"
+        }
+      ],
+      "foxglovePanelTitle": "STATE"
+    },
+    "Indicator!9k4ufh": {
+      "path": "/cerebri/out/status.mode",
+      "style": "background",
+      "rules": [
+        {
+          "operator": "=",
+          "rawValue": "0",
+          "color": "#ffffff",
+          "label": "Select Mode"
+        },
+        {
+          "operator": "=",
+          "rawValue": "1",
+          "color": "#00ff00",
+          "label": "Manual"
+        },
+        {
+          "operator": "=",
+          "rawValue": "2",
+          "color": "#ff0000",
+          "label": "Auto"
+        },
+        {
+          "operator": "=",
+          "rawValue": "3",
+          "color": "#0000ff",
+          "label": "cmd_vel"
+        },
+        {
+          "operator": "=",
+          "rawValue": "4",
+          "color": "#ffff00",
+          "label": "Calibration"
+        }
+      ],
+      "foxglovePanelTitle": "MODE"
+    }
+  },
+  "globalVariables": {
+    "": "\"\"",
+    "globalVariable": 0
+  },
+  "userNodes": {
+    "7f43e8d8-6f62-4e9e-b773-57adf07af2bb": {
+      "sourceCode": "// This example shows how to subscribe to multiple input topics.\n//\n// NOTE:\n// User Scripts can subscribe to multiple input topics, but can only publish on a single topic.\n\nimport { Input } from \"./types\";\n\ntype Output = { topic: string };\ntype GlobalVariables = { id: number };\n\n// List all the input topics in the `input` array\nexport const inputs = [\"/input/topic\", \"/input/another\"];\nexport const output = \"/studio_script/output_topic\";\n\n// Make an InputEvent type alias. Since our script will get a message from either input topic, we need to enumerate the topics.\ntype InputEvent = Input<\"/input/topic\"> | Input<\"/input/another\">;\n\nexport default function script(event: InputEvent, globalVars: GlobalVariables): Output {\n  // Remember that your script will get messages on each topic, so you\n  // need to check each event's topic to know which fields are available on the message.\n  switch (event.topic) {\n    case \"/input/topic\":\n      // topic specific input logic\n      // Our message fields are specific to our topic message\n      break;\n    case \"/input/another\":\n      // another specific logic\n      break;\n  }\n\n  // Scripts can only output one type of message regardless of the inputs\n  // Here we echo back the input topic as an example.\n  return {\n    topic: event.topic,\n  };\n};\n",
+      "name": "7f43e8d8"
+    }
+  },
+  "playbackConfig": {
+    "speed": 1
+  },
+  "layout": {
+    "first": "congipilot-joystick.CogniPilot Joystick!3i8jpy6",
+    "second": {
+      "first": "3D!18i6zy7",
+      "second": {
+        "first": {
+          "first": "Image!dzx5t6",
+          "second": "RawMessages!1ydg0gi",
+          "direction": "column",
+          "splitPercentage": 62.74131274131274
+        },
+        "second": {
+          "first": "Indicator!dweyid",
+          "second": "Indicator!9k4ufh",
+          "direction": "column",
+          "splitPercentage": 52.38095238095236
+        },
+        "direction": "column",
+        "splitPercentage": 76.99050401753105
+      },
+      "direction": "row",
+      "splitPercentage": 78.08683683683684
+    },
+    "direction": "row",
+    "splitPercentage": 19.759036144578314
+  }
+}
